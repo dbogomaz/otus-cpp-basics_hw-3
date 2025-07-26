@@ -21,8 +21,7 @@ int enterNumber() {
     return value;
 }
 
-int numberGenerator() {
-    const int maxValue{100};
+int numberGenerator(const int maxValue) {
     std::srand(std::time(nullptr));
     return std::rand() % maxValue;
 }

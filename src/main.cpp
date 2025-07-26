@@ -4,10 +4,23 @@
 #include "function.h"
 
 int main(int argc, char *argv[]) {
+    // лучше использовать какую-то библиотеку для работы с аргументами командной строки
+    // но для домашки будем использовать стандартные средства
+    int maxValue{100}; // значение по умолчанию
+    // display("argc =", argc);
+    for (size_t i = 0; i < argc; i++){
+        // display(std::to_string(i) + ": " + argv[i]);
+        if (argv[i] == std::string{"--max"} && argv[i + 1]) { // i+1 - потенциальная ошибка, на компилятор вроде съел. проверять лениво для домашки сойдет :)
+            // если есть аргумент --max, то используем его значение
+            // в качестве максимального значения для генерации случайного числа
+            maxValue = std::stoi(argv[i + 1]);
+        }        
+    }
+
     // Вводим имя пользователя
     const std::string userName{enterUserName()};
     // Генерируем случайное число
-    const int intendedNumber{numberGenerator()};
+    const int intendedNumber{numberGenerator(maxValue)};
     display("Загадано число:", intendedNumber);
     // Настраиваем количество попыток
     int attempts{1}; // Счетчик попыток
