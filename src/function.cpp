@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <tuple>
+#include <algorithm>
 
 void display(const std::string &msg) {
     std::cout << msg << std::endl;
@@ -52,14 +55,45 @@ bool checkingNumber(const int intendedNumber,
     return result;
 }
 
-void saveToFile(const std::string &fileName, const std::string &data) {
-    std::ofstream outFile(fileName, std::ios::app);
+void saveToFile(const std::string &fileName, 
+                const std::string &userName,
+                const int attempts) {
+    // захотелось хранить записи отсортированными
+    // Структура для хранения записей
+    using Record = std::tuple<std::string, int>;
+    std::vector<Record> records;
+
+    // Чтение существующих данных
+    std::ifstream inFile(fileName);
+    if (inFile.is_open()) {
+        std::string name;
+        int att;
+        while (inFile >> name >> att) {
+            records.emplace_back(name, att);
+        }
+        inFile.close();
+    }
+
+    // Добавление новой записи
+    records.emplace_back(userName, attempts);
+
+    // Сортировка: сначала по попыткам, потом по имени
+    std::sort(records.begin(), records.end(), [](const Record &a, const Record &b) {
+        if (std::get<1>(a) != std::get<1>(b))
+            return std::get<1>(a) < std::get<1>(b);
+        return std::get<0>(a) < std::get<0>(b);
+    });
+
+    // Сохранение обратно в файл
+    std::ofstream outFile(fileName, std::ios::trunc);
     if (outFile.is_open()) {
-        outFile << data << std::endl;
+        for (const auto &rec : records) {
+            outFile << std::get<0>(rec) << " " << std::get<1>(rec) << std::endl;
+        }
         outFile.close();
     } else {
         std::cerr << "Error opening file: " << fileName << std::endl;
-    }   
+    }
 }
 
 void viewLog(const std::string &fileName) {
