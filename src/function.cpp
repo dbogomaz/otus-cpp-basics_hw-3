@@ -30,20 +30,23 @@ std::string enterUserName() {
     return userName;
 }
 
-bool checkingNumber(const int intendedNumber, const int numberToCheck) {
+bool checkingNumber(const int intendedNumber, 
+                    const int numberToCheck,
+                    int &attempts) {
     static int att{0};
     att++;
-    std::cout << "att: " << att << std::endl;
+
     bool result{false};
     if (intendedNumber < numberToCheck) {
         display("less than ", numberToCheck);
     }
     if (intendedNumber > numberToCheck) {
-        display("less than ", numberToCheck);
+        display("greater than ", numberToCheck);
     }
     if (intendedNumber == numberToCheck) {
-        display("you win! attempts =", numberToCheck);
+        // display("you win! attempts =", att);
         result = true;
     }
+    attempts = att;
     return result;
 }
