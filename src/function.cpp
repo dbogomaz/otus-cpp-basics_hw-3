@@ -1,31 +1,6 @@
+#include "function.h"
+
 #include <iostream>
-#include <ctime>
-
-void display(const std::string &msg);
-void display(const std::string &msg,const int value);
-int enterNumber();
-int numberGenerator();
-std::string enterUserName();
-bool checkingNumber(const int intendedNumber, const int numberToCheck);
-
-int main(int argc, char *argv[]) {
-
-    const std::string userName{enterUserName()};
-   
-    display(userName);
-
-    const int intendedNumber{numberGenerator()};
-    display("Загадано число:", intendedNumber);
-
-    while (!checkingNumber(intendedNumber, enterNumber()))
-    {
-        /* code */
-    }
-    
-   
-    
-    return 0;
-}
 
 void display(const std::string &msg) {
     std::cout << msg << std::endl;
