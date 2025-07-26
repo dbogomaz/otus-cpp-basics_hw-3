@@ -20,18 +20,23 @@ int main(int argc, char *argv[]) {
         win = checkingNumber(intendedNumber, enterNumber(), attempts);
     }
 
+    const std::string logFileName{"game_results.txt"};
+
     if (win) {
         display("Congratulations, " + 
                 userName + 
                 "! You guessed the number in " + 
                 std::to_string(attempts) + 
                 " attempts.");
+        saveToFile(logFileName, userName + " " + std::to_string(attempts));
     } else {
         display("Sorry, " + 
                 userName + 
                 ". You've used all your attempts. The number was: ",  
                 intendedNumber);
     }
+    display("\nHigh scores table:");
+    viewLog(logFileName);    
      
     return 0;
 }

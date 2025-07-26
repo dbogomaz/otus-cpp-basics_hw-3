@@ -1,6 +1,7 @@
 #include "function.h"
 
 #include <iostream>
+#include <fstream>
 
 void display(const std::string &msg) {
     std::cout << msg << std::endl;
@@ -49,4 +50,27 @@ bool checkingNumber(const int intendedNumber,
     }
     attempts = att;
     return result;
+}
+
+void saveToFile(const std::string &fileName, const std::string &data) {
+    std::ofstream outFile(fileName, std::ios::app);
+    if (outFile.is_open()) {
+        outFile << data << std::endl;
+        outFile.close();
+    } else {
+        std::cerr << "Error opening file: " << fileName << std::endl;
+    }   
+}
+
+void viewLog(const std::string &fileName) {
+    std::ifstream inFile(fileName);
+    if (inFile.is_open()) {
+        std::string line;
+        while (std::getline(inFile, line)) {
+            std::cout << line << std::endl;
+        }
+        inFile.close();
+    } else {
+        std::cerr << "Error opening file: " << fileName << std::endl;
+    }
 }
