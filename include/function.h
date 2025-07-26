@@ -30,7 +30,7 @@ int enterNumber();
  * 
  * @return Сгенерированное число.
  */
-int numberGenerator();
+int numberGenerator(const int maxValue = 100);
 
 /**
  * @brief Запрашивает ввод имени пользователя.
