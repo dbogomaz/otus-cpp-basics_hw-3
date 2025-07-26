@@ -7,14 +7,21 @@ int main(int argc, char *argv[]) {
     // лучше использовать какую-то библиотеку для работы с аргументами командной строки
     // но для домашки будем использовать стандартные средства
     int maxValue{100}; // значение по умолчанию
+    const std::string logFileName{"game_results.txt"};
     // display("argc =", argc);
     for (size_t i = 0; i < argc; i++){
         // display(std::to_string(i) + ": " + argv[i]);
-        if (argv[i] == std::string{"--max"} && argv[i + 1]) { // i+1 - потенциальная ошибка, на компилятор вроде съел. проверять лениво для домашки сойдет :)
+        if (argv[i] == std::string{"--max"} && argv[i + 1]) { // i+1 - потенциальная ошибка, на компилятор вроде съел. 
+            // проверять лениво для домашки сойдет :) runtime errora нет как не странно
             // если есть аргумент --max, то используем его значение
             // в качестве максимального значения для генерации случайного числа
             maxValue = std::stoi(argv[i + 1]);
-        }        
+        }
+        if (argv[i] == std::string{"--table"}) {
+            display("\nHigh scores table:");
+            viewLog(logFileName);
+            return 0;
+        }
     }
 
     // Вводим имя пользователя
@@ -43,7 +50,7 @@ int main(int argc, char *argv[]) {
     // Если пользователь исчерпал лимит попыток, то выводим сообщение об этом
     // и показываем загаданное число
     // В любом случае выводим таблицу рекордов
-    const std::string logFileName{"game_results.txt"};
+
     if (win) {
         display("Congratulations, " + 
                 userName + 
