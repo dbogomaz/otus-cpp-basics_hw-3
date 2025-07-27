@@ -16,7 +16,7 @@ void display(const std::string &msg, const int value) {
 }
 
 int enterNumber() {
-    std::cout << "Enter your guess: ";  
+    std::cout << "\nEnter your guess: ";  
     int value;
     std::cin >> value;
     return value;
@@ -39,6 +39,7 @@ bool checkingNumber(const int intendedNumber,
                     int &attempts) {
     static int att{0};
     att++;
+    display("Attempt number", att);
 
     bool result{false};
     if (intendedNumber < numberToCheck) {
@@ -104,5 +105,27 @@ void viewLog(const std::string &fileName) {
         inFile.close();
     } else {
         std::cerr << "Error opening file: " << fileName << std::endl;
+    }
+}
+
+void setLevel(int &maxValue, int &maxAttempts, const int level) {
+    switch (level) {
+        case 1: // Easy
+            maxValue = 10;
+            maxAttempts = 5;
+            display("Level set to Easy: maxValue = 10, maxAttempts = 5");
+            break;
+        case 2: // Medium
+            maxValue = 50;
+            maxAttempts = 10;
+            display("Level set to Medium: maxValue = 50, maxAttempts = 10");
+            break;
+        case 3: // Hard
+            maxValue = 100;
+            maxAttempts = 15;
+            display("Level set to Hard: maxValue = 100, maxAttempts = 15");
+            break;
+        default: // Default level
+            break;
     }
 }
