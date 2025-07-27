@@ -58,37 +58,34 @@ bool checkingNumber(const int intendedNumber,
 void saveToFile(const std::string &fileName, 
                 const std::string &userName,
                 const int attempts) {
-    // захотелось хранить записи отсортированными
     // Структура для хранения записей
-    using Record = std::tuple<std::string, int>;
-    std::vector<Record> records;
+    using Records = std::map<std::string, int>;
+    Records records{};
 
     // Чтение существующих данных
     std::ifstream inFile(fileName);
     if (inFile.is_open()) {
-        std::string name;
-        int att;
+        std::string name{};
+        int att{};
         while (inFile >> name >> att) {
-            records.emplace_back(name, att);
+            records[name] = att ;
         }
         inFile.close();
+    } else {
+        std::cerr << "Error opening file: " << fileName << std::endl;
     }
 
-    // Добавление новой записи
-    records.emplace_back(userName, attempts);
-
-    // Сортировка: сначала по попыткам, потом по имени
-    std::sort(records.begin(), records.end(), [](const Record &a, const Record &b) {
-        if (std::get<1>(a) != std::get<1>(b))
-            return std::get<1>(a) < std::get<1>(b);
-        return std::get<0>(a) < std::get<0>(b);
-    });
+    // Добавление новой записи если игрок встречается первый раз или текущий результат лучше
+    if (records.find(userName) == records.end() || 
+        attempts < records[userName]) {
+        records[userName] = attempts;
+    }     
 
     // Сохранение обратно в файл
-    std::ofstream outFile(fileName, std::ios::trunc);
+    std::ofstream outFile(fileName, std::ios::out | std::ios::trunc);
     if (outFile.is_open()) {
         for (const auto &rec : records) {
-            outFile << std::get<0>(rec) << " " << std::get<1>(rec) << std::endl;
+            outFile << rec.first << " " << rec.second << std::endl;
         }
         outFile.close();
     } else {
@@ -99,23 +96,12 @@ void saveToFile(const std::string &fileName,
 void viewLog(const std::string &fileName) {
     std::ifstream inFile(fileName);
     if (inFile.is_open()) {
-        using Records = std::map<std::string, int>;
-        Records records{};
-        std::string name{};
-        int attempts{};
         std::string line;
-        while (inFile >> name >> attempts) {
-            // Если игрок встречается первый раз или текущий результат лучше
-            if (records.find(name) == records.end() || attempts < records[name]) {
-                records[name] = attempts;
-            }  
+        display("\nHigh scores table:");
+        while (std::getline(inFile, line)) {
+            display(line);
         }
         inFile.close();
-        // Выводим записи
-        display("\nHigh scores table:");
-        for (auto &&rec : records) {
-            std::cout << rec.first << " " << rec.second << std::endl;
-        }        
     } else {
         std::cerr << "Error opening file: " << fileName << std::endl;
     }
