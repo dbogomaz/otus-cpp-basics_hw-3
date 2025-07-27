@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
             maxValue = std::stoi(argv[i + 1]);
         }
         if (argv[i] == std::string{"--table"}) {
-            display("\nHigh scores table:");
             viewLog(logFileName);
             return 0;
         }
@@ -28,7 +27,7 @@ int main(int argc, char *argv[]) {
     const std::string userName{enterUserName()};
     // Генерируем случайное число
     const int intendedNumber{numberGenerator(maxValue)};
-    display("Загадано число:", intendedNumber);
+    display("Загадано число:", intendedNumber); // для отладки, в реальной игре не показываем загаданное число
     // Настраиваем количество попыток
     int attempts{1}; // Счетчик попыток
     const int maxAttempts{5}; // Максимальное количество попыток
@@ -64,7 +63,7 @@ int main(int argc, char *argv[]) {
                 ". You've used all your attempts. The number was: ",  
                 intendedNumber);
     }
-    display("\nHigh scores table:");
+    // Показываем таблицу рекордов
     viewLog(logFileName);    
      
     return 0;

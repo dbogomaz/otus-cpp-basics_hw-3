@@ -5,6 +5,7 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
+#include <map>
 
 void display(const std::string &msg) {
     std::cout << msg << std::endl;
@@ -98,11 +99,23 @@ void saveToFile(const std::string &fileName,
 void viewLog(const std::string &fileName) {
     std::ifstream inFile(fileName);
     if (inFile.is_open()) {
+        using Records = std::map<std::string, int>;
+        Records records{};
+        std::string name{};
+        int attempts{};
         std::string line;
-        while (std::getline(inFile, line)) {
-            std::cout << line << std::endl;
+        while (inFile >> name >> attempts) {
+            // Если игрок встречается первый раз или текущий результат лучше
+            if (records.find(name) == records.end() || attempts < records[name]) {
+                records[name] = attempts;
+            }  
         }
         inFile.close();
+        // Выводим записи
+        display("\nHigh scores table:");
+        for (auto &&rec : records) {
+            std::cout << rec.first << " " << rec.second << std::endl;
+        }        
     } else {
         std::cerr << "Error opening file: " << fileName << std::endl;
     }
