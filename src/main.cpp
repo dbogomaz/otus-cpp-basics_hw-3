@@ -7,6 +7,7 @@ int main(int argc, char *argv[]) {
     // лучше использовать какую-то библиотеку для работы с аргументами командной строки
     // но для домашки будем использовать стандартные средства
     int maxValue{100}; // значение по умолчанию
+    int maxAttempts{10}; // Максимальное количество попыток
     const std::string logFileName{"game_results.txt"};
     // display("argc =", argc);
     for (size_t i = 0; i < argc; i++){
@@ -21,6 +22,13 @@ int main(int argc, char *argv[]) {
             viewLog(logFileName);
             return 0;
         }
+        if (argv[i] == std::string{"--level"} && argv[i + 1]) {
+            // если есть аргумент --level, то используем его значение
+            // в качестве уровня сложности игры
+            // 1 - легкий, 2 - средний, 3 - сложный
+            const int level{std::stoi(argv[i + 1])};
+            setLevel(maxValue, maxAttempts, level);
+        }
     }
 
     // Вводим имя пользователя
@@ -30,7 +38,6 @@ int main(int argc, char *argv[]) {
     display("Загадано число:", intendedNumber); // для отладки, в реальной игре не показываем загаданное число
     // Настраиваем количество попыток
     int attempts{1}; // Счетчик попыток
-    const int maxAttempts{10}; // Максимальное количество попыток
     display("Maximum number of attempts:", maxAttempts);
 
     // Основной игровой цикл
@@ -40,7 +47,6 @@ int main(int argc, char *argv[]) {
     // Если исчерпал лимит, то завершаем цикл
     bool win{false};
     while (attempts < maxAttempts && !win) {
-        display("Attempt number", attempts);
         win = checkingNumber(intendedNumber, enterNumber(), attempts);
     }
 

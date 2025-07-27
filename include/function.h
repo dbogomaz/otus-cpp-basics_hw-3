@@ -69,4 +69,15 @@ void saveToFile(const std::string &fileName,
  */
 void viewLog(const std::string &fileName);
 
+/**
+ * @brief Устанавливает параметры уровня сложности игры.
+ * 
+ * @param[out] maxValue Ссылка на переменную, в которую будет записано максимальное загадываемое значение.
+ * @param[out] maxAttempts Ссылка на переменную, в которую будет записано количество выделяемых попыток.
+ * @param[in] level Уровень сложности (1 - легкий, 2 - средний, 3 - сложный). По умолчанию 1.
+ */
+void setLevel(int &maxValue, 
+              int &maxAttempts, 
+              const int level = 1);
+
 #endif // FUNCTION_H
