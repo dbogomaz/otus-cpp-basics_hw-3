@@ -4,8 +4,6 @@
 #include "function.h"
 
 int main(int argc, char *argv[]) {
-    viewLog("game_results.txt");
-    return 0;
     // лучше использовать какую-то библиотеку для работы с аргументами командной строки
     // но для домашки будем использовать стандартные средства
     int maxValue{100}; // значение по умолчанию
@@ -29,7 +27,7 @@ int main(int argc, char *argv[]) {
     const std::string userName{enterUserName()};
     // Генерируем случайное число
     const int intendedNumber{numberGenerator(maxValue)};
-    display("Загадано число:", intendedNumber);
+    display("Загадано число:", intendedNumber); // для отладки, в реальной игре не показываем загаданное число
     // Настраиваем количество попыток
     int attempts{1}; // Счетчик попыток
     const int maxAttempts{5}; // Максимальное количество попыток
