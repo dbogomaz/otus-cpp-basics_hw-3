@@ -4,6 +4,8 @@
 #include "function.h"
 
 int main(int argc, char *argv[]) {
+    viewLog("game_results.txt");
+    return 0;
     // лучше использовать какую-то библиотеку для работы с аргументами командной строки
     // но для домашки будем использовать стандартные средства
     int maxValue{100}; // значение по умолчанию
@@ -18,7 +20,6 @@ int main(int argc, char *argv[]) {
             maxValue = std::stoi(argv[i + 1]);
         }
         if (argv[i] == std::string{"--table"}) {
-            display("\nHigh scores table:");
             viewLog(logFileName);
             return 0;
         }
@@ -64,7 +65,7 @@ int main(int argc, char *argv[]) {
                 ". You've used all your attempts. The number was: ",  
                 intendedNumber);
     }
-    display("\nHigh scores table:");
+    // Показываем таблицу рекордов
     viewLog(logFileName);    
      
     return 0;
