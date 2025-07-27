@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     display("Загадано число:", intendedNumber); // для отладки, в реальной игре не показываем загаданное число
     // Настраиваем количество попыток
     int attempts{1}; // Счетчик попыток
-    const int maxAttempts{5}; // Максимальное количество попыток
+    const int maxAttempts{10}; // Максимальное количество попыток
     display("Maximum number of attempts:", maxAttempts);
 
     // Основной игровой цикл
